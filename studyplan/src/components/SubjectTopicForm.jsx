@@ -64,7 +64,7 @@ export function SubjectTopicForm() {
   };
 
   const searchYouTube = async (searchQuery, taskIndex) => {
-    const API_KEY = "AIzaSyCkAZnr2hxq62eZ3GFWiUS7NWq0FXGsENg"; // Replace with your YouTube Data API key
+    const API_KEY = "AIzaSyDQzgCKv49XLKqjohAXxk6xavXyvaPzEp8"; // Replace with your YouTube Data API key
     const baseURL = "https://www.googleapis.com/youtube/v3/search";
     const query = `part=snippet&q=${searchQuery}&type=video&key=${API_KEY}`;
 
@@ -130,13 +130,6 @@ export function SubjectTopicForm() {
     borderRadius: "6px",
     cursor: "pointer",
     transition: "background-color 0.3s ease",
-  };
-
-  // Add this to your styles
-  const youtubeLinkStyle = {
-    color: "red", // Set the link color to red
-    textDecoration: "underline", // Add underline
-    fontSize: "14px", // Optional: you can adjust the font size
   };
 
   return (
@@ -240,7 +233,6 @@ export function SubjectTopicForm() {
                             href={`https://www.youtube.com/watch?v=${video.id.videoId}`}
                             target="_blank"
                             rel="noopener noreferrer"
-                            style={youtubeLinkStyle} // Apply the new style here
                           >
                             {video.snippet.title}
                           </a>
