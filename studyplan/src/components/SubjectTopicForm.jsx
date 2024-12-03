@@ -14,53 +14,70 @@ export function SubjectTopicForm() {
     setDifficulty("medium");
   };
 
+  const formStyle = {
+    maxWidth: "400px",
+    margin: "0 auto",
+    padding: "20px",
+    backgroundColor: "white",
+    borderRadius: "8px",
+    boxShadow: "0 2px 4px rgba(0, 0, 0, 0.1)",
+  };
+
+  const inputStyle = {
+    width: "100%",
+    padding: "8px",
+    marginBottom: "10px",
+    border: "1px solid #ccc",
+    borderRadius: "4px",
+  };
+
+  const buttonStyle = {
+    width: "100%",
+    padding: "10px",
+    backgroundColor: "#28a745",
+    color: "white",
+    border: "none",
+    borderRadius: "4px",
+    cursor: "pointer",
+  };
+
   return (
-    <form onSubmit={handleSubmit} className='space-y-4'>
+    <form onSubmit={handleSubmit} style={formStyle}>
       <div>
-        <label htmlFor='subject' className='block mb-1'>
-          Subject
-        </label>
+        <label htmlFor='subject'>Subject</label>
         <input
           id='subject'
-          type='text'
           value={subject}
           onChange={(e) => setSubject(e.target.value)}
           placeholder='Enter subject name'
           required
-          className='w-full px-3 py-2 border rounded'
+          style={inputStyle}
         />
       </div>
       <div>
-        <label htmlFor='topic' className='block mb-1'>
-          Topic
-        </label>
+        <label htmlFor='topic'>Topic</label>
         <input
           id='topic'
-          type='text'
           value={topic}
           onChange={(e) => setTopic(e.target.value)}
           placeholder='Enter topic name'
           required
-          className='w-full px-3 py-2 border rounded'
+          style={inputStyle}
         />
       </div>
       <div>
-        <label htmlFor='difficulty' className='block mb-1'>
-          Difficulty
-        </label>
+        <label htmlFor='difficulty'>Difficulty</label>
         <select
           id='difficulty'
           value={difficulty}
           onChange={(e) => setDifficulty(e.target.value)}
-          className='w-full px-3 py-2 border rounded'>
+          style={inputStyle}>
           <option value='easy'>Easy</option>
           <option value='medium'>Medium</option>
           <option value='hard'>Hard</option>
         </select>
       </div>
-      <button
-        type='submit'
-        className='w-full bg-blue-500 text-white py-2 px-4 rounded hover:bg-blue-600'>
+      <button type='submit' style={buttonStyle}>
         Add Subject/Topic
       </button>
     </form>
