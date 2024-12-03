@@ -87,7 +87,7 @@ export function LoginPage({ onLogin }) {
             fontSize: "14px",
             color: "#666",
           }}>
-          Don't have an account? Contact administrator
+          Don't have an account? Contact administrator.
         </p>
       </div>
     </div>
