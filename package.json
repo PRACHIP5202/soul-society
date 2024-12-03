@@ -3,6 +3,11 @@
     "typescript": "^5.7.2"
   },
   "dependencies": {
+<<<<<<< HEAD
     "react-router-dom": "^7.0.2"
+=======
+    "axios": "^1.7.8",
+    "googleapis": "^144.0.0"
+>>>>>>> 6c3dc7d019914995bfdf33049add9b03b18a6ddd
   }
 }
