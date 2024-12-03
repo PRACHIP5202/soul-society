@@ -4,57 +4,40 @@ export function SubjectTopicForm() {
   const [subject, setSubject] = useState("");
   const [topic, setTopic] = useState("");
   const [classLevel, setClassLevel] = useState(""); // Class level dropdown
+  const [difficulty, setDifficulty] = useState("easy"); // Difficulty level dropdown
   const [tasks, setTasks] = useState([]); // To store the list of added subjects/topics
 
   // Predefined subjects for classes 1 to 10
   const classSubjects = {
     1: ["Maths", "English", "Science", "Social Studies", "Kannada"],
     2: ["Maths", "English", "Science", "Social Studies", "Kannada"],
-    3: ["Maths", "English", "Science", "Social Studies", "Kannada"],
-    4: ["Maths", "English", "Science", "Social Studies", "Kannada"],
-    5: ["Maths", "English", "Science", "Social Studies", "Kannada"],
-    6: ["Maths", "English", "Science", "Social Studies", "Kannada"],
-    7: ["Maths", "English", "Science", "Social Studies", "Kannada"],
-    8: ["Maths", "English", "Science", "Social Studies", "Kannada"],
-    9: ["Maths", "English", "Science", "Social Studies", "Kannada"],
-    10: ["Maths", "English", "Science", "Social Studies", "Kannada"]
+    // ... Add for other classes as needed
   };
 
   // Predefined subjects for Commerce and Science streams (11th and 12th)
   const streamSubjects = {
     commerce: ["Accountancy", "Business Studies", "Economics", "Mathematics"],
-    science: ["Physics", "Chemistry", "Biology", "Mathematics", "Computer Science"]
-  };
-
-  // Predefined topics for subjects
-  const classTopics = {
-    "Maths": ["Algebra", "Geometry", "Trigonometry", "Statistics", "Calculus"],
-    "Science": ["Physics", "Chemistry", "Biology", "Earth Science", "Astronomy"],
-    "English": ["Grammar", "Literature", "Writing", "Reading Comprehension"],
-    "History": ["Ancient History", "Modern History", "World Wars", "Independence"],
-    "Geography": ["Physical Geography", "Human Geography", "Climatic Zones", "Mapping"],
-    "Kannada": ["Grammar", "Vocabulary", "Poetry", "Translation"],
-    "Social Studies": ["Civics", "Economics", "Geography", "History"],
-    "Accountancy": ["Journal Entries", "Ledger", "Trial Balance", "Financial Statements"],
-    "Business Studies": ["Business Environment", "Marketing", "Finance", "Human Resource Management"],
-    "Economics": ["Microeconomics", "Macroeconomics", "Supply and Demand", "Inflation"],
-    "Physics": ["Mechanics", "Optics", "Thermodynamics", "Electromagnetism"],
-    "Chemistry": ["Organic Chemistry", "Inorganic Chemistry", "Physical Chemistry"],
-    "Biology": ["Cell Biology", "Genetics", "Ecology", "Evolution"],
-    "Computer Science": ["Algorithms", "Data Structures", "Operating Systems", "Networking"]
+    science: [
+      "Physics",
+      "Chemistry",
+      "Biology",
+      "Mathematics",
+      "Computer Science",
+    ],
   };
 
   const handleSubmit = (e) => {
     e.preventDefault();
 
     // Add new task to the list
-    const newTask = { subject, topic, classLevel };
+    const newTask = { subject, topic, classLevel, difficulty };
     setTasks([...tasks, newTask]);
 
     // Clear input fields
     setSubject("");
     setTopic("");
     setClassLevel("");
+    setDifficulty("easy");
   };
 
   const formStyle = {
@@ -85,168 +68,107 @@ export function SubjectTopicForm() {
   };
 
   return (
-<<<<<<< HEAD
     <div>
-      <form onSubmit={handleSubmit} className="space-y-4">
+      <form onSubmit={handleSubmit} style={formStyle}>
         {/* Class Level Dropdown */}
         <div>
-          <label htmlFor="classLevel" className="block mb-1">Class Level</label>
+          <label htmlFor='classLevel'>Class Level</label>
           <select
-            id="classLevel"
+            id='classLevel'
             value={classLevel}
             onChange={(e) => setClassLevel(e.target.value)}
             required
-            className="w-full px-3 py-2 border rounded"
-          >
-            <option value="">Select Class Level</option>
+            style={inputStyle}>
+            <option value=''>Select Class Level</option>
             {[...Array(10).keys()].map((i) => (
-              <option key={i + 1} value={i + 1}>{i + 1}</option>
+              <option key={i + 1} value={i + 1}>
+                {i + 1}
+              </option>
             ))}
-            <option value="commerce">11 - Commerce</option>
-            <option value="science">11 - Science</option>
-            <option value="commerce-12">12 - Commerce</option>
-            <option value="science-12">12 - Science</option>
+            <option value='commerce'>11 - Commerce</option>
+            <option value='science'>11 - Science</option>
+            <option value='commerce-12'>12 - Commerce</option>
+            <option value='science-12'>12 - Science</option>
           </select>
         </div>
 
-        {/* Subject Input (dynamic for Commerce/Science) */}
+        {/* Subject Input */}
         <div>
-          <label htmlFor="subject" className="block mb-1">Subject</label>
+          <label htmlFor='subject'>Subject</label>
           <select
-            id="subject"
+            id='subject'
             value={subject}
             onChange={(e) => setSubject(e.target.value)}
             required
-            className="w-full px-3 py-2 border rounded"
-          >
-            <option value="">Select Subject</option>
-            {/* Dynamic subjects for classes 1 to 10 */}
-            {classLevel >= 1 && classLevel <= 10 && classSubjects[classLevel]?.map((subjectOption) => (
-              <option key={subjectOption} value={subjectOption}>{subjectOption}</option>
-            ))}
-            {/* Dynamic subjects for Commerce or Science streams */}
-            {(classLevel === "commerce" || classLevel === "commerce-12") &&
+            style={inputStyle}>
+            <option value=''>Select Subject</option>
+            {classLevel >= 1 &&
+              classLevel <= 10 &&
+              classSubjects[classLevel]?.map((subjectOption) => (
+                <option key={subjectOption} value={subjectOption}>
+                  {subjectOption}
+                </option>
+              ))}
+            {["commerce", "commerce-12"].includes(classLevel) &&
               streamSubjects.commerce.map((subjectOption) => (
-                <option key={subjectOption} value={subjectOption}>{subjectOption}</option>
-              ))
-            }
-            {(classLevel === "science" || classLevel === "science-12") &&
+                <option key={subjectOption} value={subjectOption}>
+                  {subjectOption}
+                </option>
+              ))}
+            {["science", "science-12"].includes(classLevel) &&
               streamSubjects.science.map((subjectOption) => (
-                <option key={subjectOption} value={subjectOption}>{subjectOption}</option>
-              ))
-            }
-            {/* For custom subject */}
-            {(classLevel >= 1 && classLevel <= 10) && (
-              <option value="custom">Custom Subject</option>
-            )}
+                <option key={subjectOption} value={subjectOption}>
+                  {subjectOption}
+                </option>
+              ))}
           </select>
         </div>
 
-        {/* Topic Input - Allow writing instead of dropdown */}
+        {/* Topic Input */}
         <div>
-          <label htmlFor="topic" className="block mb-1">Topic</label>
+          <label htmlFor='topic'>Topic</label>
           <input
-            id="topic"
-            type="text"
+            id='topic'
+            type='text'
             value={topic}
             onChange={(e) => setTopic(e.target.value)}
             required
-            className="w-full px-3 py-2 border rounded"
-            placeholder="Enter topic"
+            style={inputStyle}
+            placeholder='Enter topic'
           />
         </div>
 
-        {/* Custom Topic Input */}
-        {(topic === "custom-topic") && (
-          <div>
-            <label htmlFor="customTopic" className="block mb-1">Enter Custom Topic</label>
-            <input
-              id="customTopic"
-              type="text"
-              value={topic}
-              onChange={(e) => setTopic(e.target.value)}
-              className="w-full px-3 py-2 border rounded"
-              placeholder="Enter custom topic"
-            />
-          </div>
-        )}
+        {/* Difficulty Level Dropdown */}
+        <div>
+          <label htmlFor='difficulty'>Difficulty</label>
+          <select
+            id='difficulty'
+            value={difficulty}
+            onChange={(e) => setDifficulty(e.target.value)}
+            style={inputStyle}>
+            <option value='easy'>Easy</option>
+            <option value='medium'>Medium</option>
+            <option value='hard'>Hard</option>
+          </select>
+        </div>
 
-        {/* Custom Subject Input */}
-        {(subject === "custom") && (
-          <div>
-            <label htmlFor="customSubject" className="block mb-1">Enter Custom Subject</label>
-            <input
-              id="customSubject"
-              type="text"
-              value={subject}
-              onChange={(e) => setSubject(e.target.value)}
-              className="w-full px-3 py-2 border rounded"
-              placeholder="Enter custom subject"
-            />
-          </div>
-        )}
-
-        <button
-          type="submit"
-          className="w-full bg-blue-500 text-white py-2 px-4 rounded hover:bg-blue-600"
-        >
+        <button type='submit' style={buttonStyle}>
           Add Subject/Topic
         </button>
       </form>
 
       {/* Task List */}
-      <div className="mt-8">
-        <h3 className="text-xl font-semibold">Your Tasks:</h3>
-        <ul className="space-y-3 mt-4">
+      <div style={{ marginTop: "20px" }}>
+        <h3>Your Tasks:</h3>
+        <ul>
           {tasks.map((task, index) => (
-            <li key={index} className="border p-4 rounded">
-              <h4 className="font-semibold">{task.subject} - {task.topic}</h4>
-              <p>Class Level: {task.classLevel}</p>
+            <li key={index} style={{ marginBottom: "10px" }}>
+              <strong>{task.subject}</strong> - {task.topic} (Class Level:{" "}
+              {task.classLevel}, Difficulty: {task.difficulty})
             </li>
           ))}
         </ul>
       </div>
     </div>
-=======
-    <form onSubmit={handleSubmit} style={formStyle}>
-      <div>
-        <label htmlFor='subject'>Subject</label>
-        <input
-          id='subject'
-          value={subject}
-          onChange={(e) => setSubject(e.target.value)}
-          placeholder='Enter subject name'
-          required
-          style={inputStyle}
-        />
-      </div>
-      <div>
-        <label htmlFor='topic'>Topic</label>
-        <input
-          id='topic'
-          value={topic}
-          onChange={(e) => setTopic(e.target.value)}
-          placeholder='Enter topic name'
-          required
-          style={inputStyle}
-        />
-      </div>
-      <div>
-        <label htmlFor='difficulty'>Difficulty</label>
-        <select
-          id='difficulty'
-          value={difficulty}
-          onChange={(e) => setDifficulty(e.target.value)}
-          style={inputStyle}>
-          <option value='easy'>Easy</option>
-          <option value='medium'>Medium</option>
-          <option value='hard'>Hard</option>
-        </select>
-      </div>
-      <button type='submit' style={buttonStyle}>
-        Add Subject/Topic
-      </button>
-    </form>
->>>>>>> b2ce0b22c9711868c0d12882f1da5376dd38ff8c
   );
 }

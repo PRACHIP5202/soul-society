@@ -1,15 +1,4 @@
-import { useState } from "react";
-import { Button } from "./ui/button";
-import { Input } from "./ui/input";
-import { Label } from "./ui/label";
-import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardFooter,
-  CardHeader,
-  CardTitle,
-} from "./ui/card";
+import  { useState } from "react";
 
 export function AuthForm() {
   const [isLogin, setIsLogin] = useState(true);
@@ -23,53 +12,56 @@ export function AuthForm() {
   };
 
   return (
-    <Card className='w-[350px]'>
-      <CardHeader>
-        <CardTitle>{isLogin ? "Login" : "Sign Up"}</CardTitle>
-        <CardDescription>
-          {isLogin
-            ? "Enter your credentials to access your account"
-            : "Create a new account to get started"}
-        </CardDescription>
-      </CardHeader>
-      <CardContent>
-        <form onSubmit={handleSubmit} className='space-y-4'>
-          <div className='space-y-2'>
-            <Label htmlFor='email'>Email</Label>
-            <Input
-              id='email'
-              type='email'
-              placeholder='m@example.com'
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
-              required
-            />
-          </div>
-          <div className='space-y-2'>
-            <Label htmlFor='password'>Password</Label>
-            <Input
-              id='password'
-              type='password'
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-              required
-            />
-          </div>
-          <Button type='submit' className='w-full'>
-            {isLogin ? "Login" : "Sign Up"}
-          </Button>
-        </form>
-      </CardContent>
-      <CardFooter>
-        <Button
-          variant='link'
-          className='w-full'
-          onClick={() => setIsLogin(!isLogin)}>
-          {isLogin
-            ? "Need an account? Sign Up"
-            : "Already have an account? Login"}
-        </Button>
-      </CardFooter>
-    </Card>
+    <div className='w-full max-w-md bg-white p-8 rounded-lg shadow-md'>
+      <h2 className='text-2xl font-bold mb-6 text-center'>
+        {isLogin ? "Login" : "Sign Up"}
+      </h2>
+      <p className='text-gray-600 text-center mb-6'>
+        {isLogin
+          ? "Enter your credentials to access your account"
+          : "Create a new account to get started"}
+      </p>
+      <form onSubmit={handleSubmit} className='space-y-4'>
+        <div>
+          <label htmlFor='email' className='block mb-1'>
+            Email
+          </label>
+          <input
+            id='email'
+            type='email'
+            placeholder='m@example.com'
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+            required
+            className='w-full px-3 py-2 border rounded'
+          />
+        </div>
+        <div>
+          <label htmlFor='password' className='block mb-1'>
+            Password
+          </label>
+          <input
+            id='password'
+            type='password'
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+            required
+            className='w-full px-3 py-2 border rounded'
+          />
+        </div>
+        <button
+          type='submit'
+          className='w-full bg-blue-500 text-white py-2 px-4 rounded hover:bg-blue-600'>
+          {isLogin ? "Login" : "Sign Up"}
+        </button>
+      </form>
+      <button
+        className='w-full mt-4 text-blue-500 hover:underline'
+        onClick={() => setIsLogin(!isLogin)}>
+        {isLogin
+          ? "Need an account? Sign Up"
+          : "Already have an account? Login"}
+      </button>
+    </div>
   );
 }
