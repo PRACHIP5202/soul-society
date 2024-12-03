@@ -1,7 +1,4 @@
 import  { useState, useEffect } from "react";
-import { Play, Pause, RotateCcw } from 'lucide-react';
-import { Button } from "./ui/button";
-import { Progress } from "./ui/progress";
 
 export function PomodoroTimer() {
   const [time, setTime] = useState(25 * 60);
@@ -44,27 +41,34 @@ export function PomodoroTimer() {
   const formatTime = (seconds) => {
     const mins = Math.floor(seconds / 60);
     const secs = seconds % 60;
-    return `${mins.toString().padStart(2, "0")}:${secs.toString().padStart(2, "0")}`;
+    return `${mins.toString().padStart(2, "0")}:${secs
+      .toString()
+      .padStart(2, "0")}`;
   };
 
   return (
-    <div className="space-y-4">
-      <h2 className="text-2xl font-bold text-center">
+    <div className='space-y-4'>
+      <h2 className='text-2xl font-bold text-center'>
         {isBreak ? "Break Time" : "Focus Time"}
       </h2>
-      <div className="text-4xl font-bold text-center">{formatTime(time)}</div>
-      <Progress value={(time / (isBreak ? 300 : 1500)) * 100} />
-      <div className="flex justify-center space-x-2">
-        <Button onClick={toggleTimer}>
-          {isActive ? <Pause className="h-4 w-4 mr-2" /> : <Play className="h-4 w-4 mr-2" />}
+      <div className='text-4xl font-bold text-center'>{formatTime(time)}</div>
+      <div className='w-full bg-gray-200 rounded-full h-2.5'>
+        <div
+          className='bg-blue-600 h-2.5 rounded-full'
+          style={{ width: `${(time / (isBreak ? 300 : 1500)) * 100}%` }}></div>
+      </div>
+      <div className='flex justify-center space-x-2'>
+        <button
+          onClick={toggleTimer}
+          className='bg-blue-500 text-white py-2 px-4 rounded hover:bg-blue-600'>
           {isActive ? "Pause" : "Start"}
-        </Button>
-        <Button onClick={resetTimer} variant="outline">
-          <RotateCcw className="h-4 w-4 mr-2" />
+        </button>
+        <button
+          onClick={resetTimer}
+          className='bg-gray-300 text-gray-800 py-2 px-4 rounded hover:bg-gray-400'>
           Reset
-        </Button>
+        </button>
       </div>
     </div>
   );
 }
-

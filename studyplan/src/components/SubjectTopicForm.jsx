@@ -1,14 +1,4 @@
-import { useState } from "react";
-import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from "@/components/ui/select";
+import  { useState } from "react";
 
 export function SubjectTopicForm() {
   const [subject, setSubject] = useState("");
@@ -25,43 +15,50 @@ export function SubjectTopicForm() {
   };
 
   return (
-    <form onSubmit={handleSubmit} className='space-y-4'>
+    <form onSubmit={handleSubmit} className="space-y-4">
       <div>
-        <Label htmlFor='subject'>Subject</Label>
-        <Input
-          id='subject'
+        <label htmlFor="subject" className="block mb-1">Subject</label>
+        <input
+          id="subject"
+          type="text"
           value={subject}
           onChange={(e) => setSubject(e.target.value)}
-          placeholder='Enter subject name'
+          placeholder="Enter subject name"
           required
+          className="w-full px-3 py-2 border rounded"
         />
       </div>
       <div>
-        <Label htmlFor='topic'>Topic</Label>
-        <Input
-          id='topic'
+        <label htmlFor="topic" className="block mb-1">Topic</label>
+        <input
+          id="topic"
+          type="text"
           value={topic}
           onChange={(e) => setTopic(e.target.value)}
-          placeholder='Enter topic name'
+          placeholder="Enter topic name"
           required
+          className="w-full px-3 py-2 border rounded"
         />
       </div>
       <div>
-        <Label htmlFor='difficulty'>Difficulty</Label>
-        <Select value={difficulty} onValueChange={setDifficulty}>
-          <SelectTrigger id='difficulty'>
-            <SelectValue placeholder='Select difficulty' />
-          </SelectTrigger>
-          <SelectContent>
-            <SelectItem value='easy'>Easy</SelectItem>
-            <SelectItem value='medium'>Medium</SelectItem>
-            <SelectItem value='hard'>Hard</SelectItem>
-          </SelectContent>
-        </Select>
+        <label htmlFor="difficulty" className="block mb-1">Difficulty</label>
+        <select
+          id="difficulty"
+          value={difficulty}
+          onChange={(e) => setDifficulty(e.target.value)}
+          className="w-full px-3 py-2 border rounded"
+        >
+          <option value="easy">Easy</option>
+          <option value="medium">Medium</option>
+          <option value="hard">Hard</option>
+        </select>
       </div>
-      <Button type='submit'>
-        <PlusCircle className='mr-2 h-4 w-4' /> Add Subject/Topic
-      </Button>
+      <button
+        type="submit"
+        className="w-full bg-blue-500 text-white py-2 px-4 rounded hover:bg-blue-600"
+      >
+        Add Subject/Topic
+      </button>
     </form>
   );
 }
