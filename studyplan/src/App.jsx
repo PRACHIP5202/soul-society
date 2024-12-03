@@ -1,35 +1,34 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
+//import React from "react";
+import { SubjectTopicForm } from "../src/components/SubjectTopicForm.jsx";
+import { PomodoroTimer } from "../src/components/PomodoroTimer.jsx";
+import { ProgressDashboard } from "../src/components/ProgressDashboard.jsx";
+import { AuthForm } from "../src/components/AuthForm.jsx";
 
 function App() {
-  const [count, setCount] = useState(0)
-
   return (
-    <>
-      <div>
-        <a href="https://vite.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
+    <div className='container mx-auto p-4'>
+      <h1 className='text-4xl font-bold mb-8 text-center'>
+        Personalized Study Planner
+      </h1>
+      <div className='grid grid-cols-1 md:grid-cols-2 gap-8'>
+        <div>
+          <h2 className='text-2xl font-semibold mb-4'>Add Subject/Topic</h2>
+          <SubjectTopicForm />
+        </div>
+        <div>
+          <h2 className='text-2xl font-semibold mb-4'>Pomodoro Timer</h2>
+          <PomodoroTimer />
+        </div>
+        <div className='md:col-span-2'>
+          <h2 className='text-2xl font-semibold mb-4'>Progress Dashboard</h2>
+          <ProgressDashboard />
+        </div>
+        <div className='md:col-span-2 flex justify-center'>
+          <AuthForm />
+        </div>
       </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.jsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-    </>
-  )
+    </div>
+  );
 }
 
-export default App
+export default App;
