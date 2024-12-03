@@ -1,4 +1,4 @@
-import  { useState } from "react";
+import { useState } from "react";
 
 export function SubjectTopicForm() {
   const [subject, setSubject] = useState("");
@@ -15,48 +15,52 @@ export function SubjectTopicForm() {
   };
 
   return (
-    <form onSubmit={handleSubmit} className="space-y-4">
+    <form onSubmit={handleSubmit} className='space-y-4'>
       <div>
-        <label htmlFor="subject" className="block mb-1">Subject</label>
+        <label htmlFor='subject' className='block mb-1'>
+          Subject
+        </label>
         <input
-          id="subject"
-          type="text"
+          id='subject'
+          type='text'
           value={subject}
           onChange={(e) => setSubject(e.target.value)}
-          placeholder="Enter subject name"
+          placeholder='Enter subject name'
           required
-          className="w-full px-3 py-2 border rounded"
+          className='w-full px-3 py-2 border rounded'
         />
       </div>
       <div>
-        <label htmlFor="topic" className="block mb-1">Topic</label>
+        <label htmlFor='topic' className='block mb-1'>
+          Topic
+        </label>
         <input
-          id="topic"
-          type="text"
+          id='topic'
+          type='text'
           value={topic}
           onChange={(e) => setTopic(e.target.value)}
-          placeholder="Enter topic name"
+          placeholder='Enter topic name'
           required
-          className="w-full px-3 py-2 border rounded"
+          className='w-full px-3 py-2 border rounded'
         />
       </div>
       <div>
-        <label htmlFor="difficulty" className="block mb-1">Difficulty</label>
+        <label htmlFor='difficulty' className='block mb-1'>
+          Difficulty
+        </label>
         <select
-          id="difficulty"
+          id='difficulty'
           value={difficulty}
           onChange={(e) => setDifficulty(e.target.value)}
-          className="w-full px-3 py-2 border rounded"
-        >
-          <option value="easy">Easy</option>
-          <option value="medium">Medium</option>
-          <option value="hard">Hard</option>
+          className='w-full px-3 py-2 border rounded'>
+          <option value='easy'>Easy</option>
+          <option value='medium'>Medium</option>
+          <option value='hard'>Hard</option>
         </select>
       </div>
       <button
-        type="submit"
-        className="w-full bg-blue-500 text-white py-2 px-4 rounded hover:bg-blue-600"
-      >
+        type='submit'
+        className='w-full bg-blue-500 text-white py-2 px-4 rounded hover:bg-blue-600'>
         Add Subject/Topic
       </button>
     </form>
