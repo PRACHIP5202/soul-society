@@ -1,34 +1,84 @@
-//import React from "react";
+import { useState } from "react";
+import { LoginPage } from "../src/components/LoginPage.jsx";
+import { Navbar } from "../src/components/Navbar.jsx";
 import { SubjectTopicForm } from "../src/components/SubjectTopicForm.jsx";
 import { PomodoroTimer } from "../src/components/PomodoroTimer.jsx";
 import { ProgressDashboard } from "../src/components/ProgressDashboard.jsx";
-import { AuthForm } from "../src/components/AuthForm.jsx";
 
-function App() {
+export default function App() {
+  const [user, setUser] = useState(null);
+  const [activeTab, setActiveTab] = useState("subjects");
+
+  const handleLogin = (email) => {
+    // TODO: Implement actual authentication logic
+    setUser({ email });
+  };
+
+  const handleLogout = () => {
+    setUser(null);
+  };
+
+  if (!user) {
+    return <LoginPage onLogin={handleLogin} />;
+  }
+
   return (
-    <div className='container mx-auto p-4'>
-      <h1 className='text-4xl font-bold mb-8 text-center'>
-        Personalized Study Planner
-      </h1>
-      <div className='grid grid-cols-1 md:grid-cols-2 gap-8'>
-        <div>
-          <h2 className='text-2xl font-semibold mb-4'>Add Subject/Topic</h2>
-          <SubjectTopicForm />
-        </div>
-        <div>
-          <h2 className='text-2xl font-semibold mb-4'>Pomodoro Timer</h2>
-          <PomodoroTimer />
-        </div>
-        <div className='md:col-span-2'>
-          <h2 className='text-2xl font-semibold mb-4'>Progress Dashboard</h2>
-          <ProgressDashboard />
-        </div>
-        <div className='md:col-span-2 flex justify-center'>
-          <AuthForm />
-        </div>
+    <div style={{ minHeight: "100vh", backgroundColor: "#f0f0f0" }}>
+      <Navbar
+        activeTab={activeTab}
+        setActiveTab={setActiveTab}
+        onLogout={handleLogout}
+      />
+      <div style={{ maxWidth: "1200px", margin: "0 auto", padding: "20px" }}>
+        <h1
+          style={{
+            fontSize: "24px",
+            fontWeight: "bold",
+            marginBottom: "20px",
+            textAlign: "center",
+          }}>
+          Welcome, {user.email}
+        </h1>
+        {activeTab === "subjects" && (
+          <div>
+            <h2
+              style={{
+                fontSize: "20px",
+                fontWeight: "bold",
+                marginBottom: "10px",
+              }}>
+              Add Subject/Topic
+            </h2>
+            <SubjectTopicForm />
+          </div>
+        )}
+        {activeTab === "pomodoro" && (
+          <div>
+            <h2
+              style={{
+                fontSize: "20px",
+                fontWeight: "bold",
+                marginBottom: "10px",
+              }}>
+              Pomodoro Timer
+            </h2>
+            <PomodoroTimer />
+          </div>
+        )}
+        {activeTab === "progress" && (
+          <div>
+            <h2
+              style={{
+                fontSize: "20px",
+                fontWeight: "bold",
+                marginBottom: "10px",
+              }}>
+              Progress Dashboard
+            </h2>
+            <ProgressDashboard />
+          </div>
+        )}
       </div>
     </div>
   );
 }
-
-export default App;

@@ -1,4 +1,4 @@
-import  { useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 
 export function PomodoroTimer() {
   const [time, setTime] = useState(25 * 60);
@@ -46,26 +46,64 @@ export function PomodoroTimer() {
       .padStart(2, "0")}`;
   };
 
+  const containerStyle = {
+    maxWidth: "400px",
+    margin: "0 auto",
+    padding: "20px",
+    backgroundColor: "white",
+    borderRadius: "8px",
+    boxShadow: "0 2px 4px rgba(0, 0, 0, 0.1)",
+    textAlign: "center",
+  };
+
+  const timerStyle = {
+    fontSize: "48px",
+    fontWeight: "bold",
+    margin: "20px 0",
+  };
+
+  const buttonStyle = {
+    padding: "10px 20px",
+    margin: "0 5px",
+    backgroundColor: "#007bff",
+    color: "white",
+    border: "none",
+    borderRadius: "4px",
+    cursor: "pointer",
+  };
+
+  const progressBarStyle = {
+    width: "100%",
+    height: "20px",
+    backgroundColor: "#e0e0e0",
+    borderRadius: "10px",
+    overflow: "hidden",
+    marginBottom: "20px",
+  };
+
+  const progressStyle = {
+    width: `${(time / (isBreak ? 300 : 1500)) * 100}%`,
+    height: "100%",
+    backgroundColor: "#28a745",
+    transition: "width 0.5s ease-in-out",
+  };
+
   return (
-    <div className='space-y-4'>
-      <h2 className='text-2xl font-bold text-center'>
+    <div style={containerStyle}>
+      <h2 style={{ fontSize: "24px", marginBottom: "10px" }}>
         {isBreak ? "Break Time" : "Focus Time"}
       </h2>
-      <div className='text-4xl font-bold text-center'>{formatTime(time)}</div>
-      <div className='w-full bg-gray-200 rounded-full h-2.5'>
-        <div
-          className='bg-blue-600 h-2.5 rounded-full'
-          style={{ width: `${(time / (isBreak ? 300 : 1500)) * 100}%` }}></div>
+      <div style={timerStyle}>{formatTime(time)}</div>
+      <div style={progressBarStyle}>
+        <div style={progressStyle}></div>
       </div>
-      <div className='flex justify-center space-x-2'>
-        <button
-          onClick={toggleTimer}
-          className='bg-blue-500 text-white py-2 px-4 rounded hover:bg-blue-600'>
+      <div>
+        <button onClick={toggleTimer} style={buttonStyle}>
           {isActive ? "Pause" : "Start"}
         </button>
         <button
           onClick={resetTimer}
-          className='bg-gray-300 text-gray-800 py-2 px-4 rounded hover:bg-gray-400'>
+          style={{ ...buttonStyle, backgroundColor: "#6c757d" }}>
           Reset
         </button>
       </div>
