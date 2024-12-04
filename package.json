@@ -3,9 +3,14 @@
     "typescript": "^5.7.2"
   },
   "dependencies": {
+
     "@google/generative-ai": "^0.21.0",
+
+    "react-router-dom": "^7.0.2"
+
     "axios": "^1.7.8",
     "dotenv": "^16.4.7",
     "googleapis": "^144.0.0"
+
   }
 }

@@ -1,14 +1,33 @@
-import  { useState } from "react";
+import { useState } from "react";
+import { auth } from "../firebase-config";
+import {
+  signInWithEmailAndPassword,
+  createUserWithEmailAndPassword,
+} from "firebase/auth";
 
 export function AuthForm() {
   const [isLogin, setIsLogin] = useState(true);
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [loading, setLoading] = useState(false);
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    // TODO: Implement Firebase authentication logic
-    console.log("Submitted:", { email, password, isLogin });
+    setLoading(true);
+
+    try {
+      if (isLogin) {
+        await signInWithEmailAndPassword(auth, email, password);
+        alert("Login successful");
+      } else {
+        await createUserWithEmailAndPassword(auth, email, password);
+        alert("Account created successfully");
+      }
+    } catch (error) {
+      alert(error.message);
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (
@@ -16,11 +35,6 @@ export function AuthForm() {
       <h2 className='text-2xl font-bold mb-6 text-center'>
         {isLogin ? "Login" : "Sign Up"}
       </h2>
-      <p className='text-gray-600 text-center mb-6'>
-        {isLogin
-          ? "Enter your credentials to access your account"
-          : "Create a new account to get started"}
-      </p>
       <form onSubmit={handleSubmit} className='space-y-4'>
         <div>
           <label htmlFor='email' className='block mb-1'>
@@ -51,8 +65,11 @@ export function AuthForm() {
         </div>
         <button
           type='submit'
-          className='w-full bg-blue-500 text-white py-2 px-4 rounded hover:bg-blue-600'>
-          {isLogin ? "Login" : "Sign Up"}
+          disabled={loading}
+          className={`w-full bg-blue-500 text-white py-2 px-4 rounded ${
+            loading ? "bg-blue-300" : "hover:bg-blue-600"
+          }`}>
+          {loading ? "Processing..." : isLogin ? "Login" : "Sign Up"}
         </button>
       </form>
       <button
