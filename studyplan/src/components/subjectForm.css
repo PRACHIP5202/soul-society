@@ -1,0 +1,112 @@
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background: #f4f7fc; /* Light background color */
+    margin: 0;
+    padding: 0;
+  }
+  
+  .subject-topic-container {
+    display: flex;
+    justify-content: space-between;
+    padding: 40px;
+    gap: 20px;
+    max-width: 1200px;
+    margin: auto;
+  }
+  
+  .form-container {
+    width: 60%;
+    background: linear-gradient(145deg, #ffffff, #e6f7ff);
+    padding: 30px;
+    border-radius: 10px;
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+  }
+  
+  .form-style {
+    display: flex;
+    flex-direction: column;
+  }
+  
+  .form-group {
+    margin-bottom: 20px;
+  }
+  
+  .input-field {
+    width: 100%;
+    padding: 12px;
+    margin-top: 8px;
+    border: 2px solid #ddd;
+    border-radius: 8px;
+    font-size: 16px;
+    box-sizing: border-box;
+  }
+  
+  .input-field:focus {
+    outline: none;
+    border-color: #4c9f70;
+  }
+  
+  .submit-button {
+    padding: 12px;
+    background-color: #4c9f70;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+  }
+  
+  .submit-button:hover {
+    background-color: #3b7a55;
+  }
+  
+  .task-list {
+    margin-top: 40px;
+  }
+  
+  .task-item {
+    background-color: #ffffff;
+    padding: 15px;
+    border-radius: 8px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    margin-bottom: 20px;
+  }
+  
+  .task-item:hover {
+    background-color: #f4f7ff;
+  }
+  
+  .task-button {
+    margin-left: 15px;
+    padding: 8px 16px;
+    background-color: #0069d9;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+  }
+  
+  .youtube-results {
+    margin-top: 15px;
+  }
+  
+  .youtube-link {
+    color: #007bff;
+    text-decoration: none;
+    font-weight: bold;
+  }
+  
+  .youtube-link:hover {
+    text-decoration: underline;
+  }
+  
+  .calendar-container {
+    width: 35%;
+    background: #fff;
+    border-radius: 10px;
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+    padding: 20px;
+    text-align: center;
+  }
+  

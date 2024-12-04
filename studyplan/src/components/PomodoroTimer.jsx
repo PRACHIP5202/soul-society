@@ -1,7 +1,8 @@
+
 import { useState, useEffect } from "react";
 
 export function PomodoroTimer() {
-  const [time, setTime] = useState(25 * 60);
+  const [time, setTime] = useState(25 * 60); // Default focus time: 25 minutes
   const [isActive, setIsActive] = useState(false);
   const [isBreak, setIsBreak] = useState(false);
 
@@ -10,17 +11,17 @@ export function PomodoroTimer() {
 
     if (isActive && time > 0) {
       interval = setInterval(() => {
-        setTime((time) => time - 1);
+        setTime((prevTime) => prevTime - 1);
       }, 1000);
     } else if (time === 0) {
       if (isBreak) {
-        setTime(25 * 60);
-        setIsBreak(false);
+        setTime(25 * 60); // Reset focus time
+        setIsBreak(false); // End break
       } else {
-        setTime(5 * 60);
-        setIsBreak(true);
+        setTime(5 * 60); // Start break
+        setIsBreak(true); // Begin break
       }
-      setIsActive(false);
+      setIsActive(false); // Stop timer once time is up
     }
 
     return () => {
@@ -82,7 +83,7 @@ export function PomodoroTimer() {
   };
 
   const progressStyle = {
-    width: `${(time / (isBreak ? 300 : 1500)) * 100}%`,
+    width: `${(time / (isBreak ? 5 * 60 : 25 * 60)) * 100}%`, // Dynamically calculate progress width
     height: "100%",
     backgroundColor: "#28a745",
     transition: "width 0.5s ease-in-out",

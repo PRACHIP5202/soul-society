@@ -10,6 +10,7 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@google/generative-ai": "^0.21.0",
     "@heroicons/react": "^2.2.0",
     "@radix-ui/react-label": "^2.1.0",
     "@radix-ui/react-progress": "^1.1.0",
@@ -23,6 +24,7 @@
     "next": "^15.0.3",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
+    "react-router-dom": "^7.0.2",
     "recharts": "^2.14.1",
     "studyplan": "file:",
     "tailwind-merge": "^2.5.5",
