@@ -224,11 +224,214 @@
 // }
 
 
+
+
+
+// import { useState } from "react";
+// import axios from "axios";
+// import "./GeminiAIChatbot.css"; // Import the updated CSS file
+
+// export function GeminiAIChatbot() {
+//   const [userInput, setUserInput] = useState(""); // User input
+//   const [chatHistory, setChatHistory] = useState([]); // Chat history for conversation
+//   const [loading, setLoading] = useState(false); // Loading state
+
+//   // Function to send input to Gemini API and get response
+//   const handleUserInput = async (e) => {
+//     e.preventDefault();
+//     if (!userInput.trim()) return; // Prevent empty messages
+
+//     setLoading(true);
+
+//     try {
+//       // Set up the API call
+//       const API_KEY = process.env.REACT_APP_GEMINI_API_KEY; // Get the key from .env
+//       const response = await axios.post(
+//         "https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash-latest:generateContent?key=AIzaSyDdgMjTJACZbdLAS1aBfKW2GRRadZLvFys", // Correct endpoint
+//         {
+//           model: "gemini-1.5", // Model name (update with actual model if different)
+//           messages: [
+//             { role: "user", content: userInput },
+//           ],
+//         },
+//         {
+//           headers: {
+//             "Content-Type": "application/json",
+//             Authorization: `AIzaSyDdgMjTJACZbdLAS1aBfKW2GRRadZLvFys`, // Use the API key from environment variables
+//           },
+//         }
+//       );
+
+//       // Log the full response to check the structure
+//       console.log(response.data); // Log full response for debugging
+
+//       // Ensure the response structure is correct
+//       if (response.data && response.data.generated_text) {
+//         const botResponse = response.data.generated_text; // Assuming 'generated_text' is the correct field
+
+//         // Update chat history with new message
+//         setChatHistory((prevHistory) => [
+//           ...prevHistory,
+//           { user: userInput, bot: botResponse },
+//         ]);
+//       } else {
+//         throw new Error("Invalid response format or missing data.");
+//       }
+
+//       setUserInput(""); // Clear the input field after sending
+//     } catch (error) {
+//       console.error("Error fetching data from Gemini API:", error);
+//       setChatHistory((prevHistory) => [
+//         ...prevHistory,
+//         { user: userInput, bot: "Sorry, something went wrong." },
+//       ]);
+//     } finally {
+//       setLoading(false); // Hide loading state
+//     }
+//   };
+
+//   return (
+//     <div className="gemini-chatbot-container">
+//       <h2>Chat with  AI</h2>
+
+//       {/* Chat History */}
+//       <div className="chat-history">
+//         {chatHistory.map((chat, index) => (
+//           <div key={index} className="chat-message">
+//             <div className="user-message">
+//               <strong>You:</strong> {chat.user}
+//             </div>
+//             <div className="bot-message">
+//               <strong>Bot:</strong> {chat.bot}
+//             </div>
+//           </div>
+//         ))}
+//       </div>
+
+//       {/* Chat Input Form */}
+//       <form onSubmit={handleUserInput} className="chat-form">
+//         <textarea
+//           placeholder="Ask something..."
+//           value={userInput}
+//           onChange={(e) => setUserInput(e.target.value)}
+//           rows="4"
+//           className="input-textarea"
+//         />
+//         <button type="submit" className="submit-button" disabled={loading}>
+//           {loading ? "Loading..." : "Send"}
+//         </button>
+//       </form>
+//     </div>
+//   );
+// }
+// export default GeminiAIChatbot;
+
+
+// import { useState } from "react";
+// import axios from "axios";
+// import "./GeminiAIChatbot.css"; // Import the updated CSS file
+
+// export function GeminiAIChatbot() {
+//   const [userInput, setUserInput] = useState(""); // User input
+//   const [chatHistory, setChatHistory] = useState([]); // Chat history for conversation
+//   const [loading, setLoading] = useState(false); // Loading state
+
+//   // Function to send input to Gemini API and get response
+//   const handleUserInput = async (e) => {
+//     e.preventDefault();
+//     if (!userInput.trim()) return; // Prevent empty messages
+
+//     setLoading(true);
+
+//     try {
+//       const response = await axios.post(
+//         "https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash-latest:generateContent?key=AIzaSyDBbKEoJ5AXfrTteS3zAL2QYCksuWc0ulM", // Correct endpoint with key
+//         {
+//           model: "gemini-1.5", // Model name (update with actual model if different)
+//           messages: [
+//             { role: "user", content: userInput },
+//           ],
+//         },
+//         {
+//           headers: {
+//             "Content-Type": "application/json",
+//             Authorization: `Bearer AIzaSyDBbKEoJ5AXfrTteS3zAL2QYCksuWc0ulM`, // Directly use the key here
+//           },
+//         }
+//       );
+
+//       // Log the full response to check the structure
+//       console.log(response.data); // Log full response for debugging
+
+//       // Ensure the response structure is correct
+//       if (response.data && response.data.generated_text) {
+//         const botResponse = response.data.generated_text; // Assuming 'generated_text' is the correct field
+
+//         // Update chat history with new message
+//         setChatHistory((prevHistory) => [
+//           ...prevHistory,
+//           { user: userInput, bot: botResponse },
+//         ]);
+//       } else {
+//         throw new Error("Invalid response format or missing data.");
+//       }
+
+//       setUserInput(""); // Clear the input field after sending
+//     } catch (error) {
+//       console.error("Error fetching data from Gemini API:", error);
+//       setChatHistory((prevHistory) => [
+//         ...prevHistory,
+//         { user: userInput, bot: "Sorry, something went wrong." },
+//       ]);
+//     } finally {
+//       setLoading(false); // Hide loading state
+//     }
+//   };
+
+//   return (
+//     <div className="gemini-chatbot-container">
+//       <h2>Chat with AI</h2>
+
+//       {/* Chat History */}
+//       <div className="chat-history">
+//         {chatHistory.map((chat, index) => (
+//           <div key={index} className="chat-message">
+//             <div className="user-message">
+//               <strong>You:</strong> {chat.user}
+//             </div>
+//             <div className="bot-message">
+//               <strong>Bot:</strong> {chat.bot}
+//             </div>
+//           </div>
+//         ))}
+//       </div>
+
+//       {/* Chat Input Form */}
+//       <form onSubmit={handleUserInput} className="chat-form">
+//         <textarea
+//           placeholder="Ask something..."
+//           value={userInput}
+//           onChange={(e) => setUserInput(e.target.value)}
+//           rows="4"
+//           className="input-textarea"
+//         />
+//         <button type="submit" className="submit-button" disabled={loading}>
+//           {loading ? "Loading..." : "Send"}
+//         </button>
+//       </form>
+//     </div>
+//   );
+// }
+
+// export default GeminiAIChatbot;
+
 import { useState } from "react";
 import axios from "axios";
 import "./GeminiAIChatbot.css"; // Import the updated CSS file
+import {GoogleGenerativeAI} from "@google/generative-ai";
 
 export function GeminiAIChatbot() {
+    const genAI = new GoogleGenerativeAI("AIzaSyDBbKEoJ5AXfrTteS3zAL2QYCksuWc0ulM");
   const [userInput, setUserInput] = useState(""); // User input
   const [chatHistory, setChatHistory] = useState([]); // Chat history for conversation
   const [loading, setLoading] = useState(false); // Loading state
@@ -241,30 +444,36 @@ export function GeminiAIChatbot() {
     setLoading(true);
 
     try {
-      // Set up the API call
-      const API_KEY = process.env.REACT_APP_GEMINI_API_KEY; // Get the key from .env
-      const response = await axios.post(
-        "https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash-latest:generateContent?key=AIzaSyDdgMjTJACZbdLAS1aBfKW2GRRadZLvFys", // Correct endpoint
-        {
-          model: "gemini-1.5", // Model name (update with actual model if different)
-          messages: [
-            { role: "user", content: userInput },
-          ],
-        },
-        {
-          headers: {
-            "Content-Type": "application/json",
-            Authorization: `AIzaSyDdgMjTJACZbdLAS1aBfKW2GRRadZLvFys`, // Use the API key from environment variables
-          },
-        }
-      );
+    //   const API_KEY = "AIzaSyDBbKEoJ5AXfrTteS3zAL2QYCksuWc0ulM"; // Get the key from .env file
 
+    //   const response = await axios.post(
+    //     `https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash-latest:generateContent?keyAIzaSyDBbKEoJ5AXfrTteS3zAL2QYCksuWc0ulM`, // Use the API key from env
+    //     {
+    //       model: "gemini-1.5", // Model name (update with actual model if different)
+    //       messages: [
+    //         { role: "user", content: userInput },
+    //       ],
+    //     },
+    //     {
+    //       headers: {
+    //         "Content-Type": "application/json",
+    //         Authorization: `Bearer AIzaSyDBbKEoJ5AXfrTteS3zAL2QYCksuWc0ulM`, // Use the API key from env for Authorization header
+    //       },
+    //     }
+    //   );
+    const model = genAI.getGenerativeModel({ model: "gemini-1.5-flash" });
+
+    const prompt =`could you please answer this question ${userInput} give me a brief answer`;
+    
+    const result = await model.generateContent(prompt);
+    console.log(result.response.text());
+    const reply=result.response.text();
       // Log the full response to check the structure
-      console.log(response.data); // Log full response for debugging
+      // Log full response for debugging
 
       // Ensure the response structure is correct
-      if (response.data && response.data.generated_text) {
-        const botResponse = response.data.generated_text; // Assuming 'generated_text' is the correct field
+      if (reply) {
+        const botResponse = reply; // Assuming 'generated_text' is the correct field
 
         // Update chat history with new message
         setChatHistory((prevHistory) => [
@@ -289,7 +498,7 @@ export function GeminiAIChatbot() {
 
   return (
     <div className="gemini-chatbot-container">
-      <h2>Chat with  AI</h2>
+      <h2>Chat with AI</h2>
 
       {/* Chat History */}
       <div className="chat-history">
@@ -321,4 +530,7 @@ export function GeminiAIChatbot() {
     </div>
   );
 }
+
 export default GeminiAIChatbot;
+
+

@@ -108,7 +108,7 @@ export function Navbar({ activeTab, setActiveTab, onLogout }) {
   return (
     <nav style={navStyle}>
       <div style={containerStyle}>
-        <div style={{ fontSize: "20px", fontWeight: "bold" }}>Study Planner</div>
+        <div style={{ fontSize: "20px", fontWeight: "bold" }}>StudySphere</div>
         <div>
           <button
             style={activeTab === "subjects" ? activeButtonStyle : buttonStyle}
