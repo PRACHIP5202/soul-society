@@ -17,15 +17,12 @@ export function SubjectTopicForm() {
   const handleSubmit = (e) => {
     e.preventDefault();
 
-    const newTask = {
-      subject,
-      topic,
-      classLevel,
-      dueDate: new Date(new Date().getTime() + 24 * 60 * 60 * 1000).toISOString(),
-      youtubeResults: [], // Store YouTube results specific to this task
-    };
+    const newTask = { subject, topic, classLevel, dueDate: new Date(new Date().getTime() + 24 * 60 * 60 * 1000).toISOString(), youtubeResults: [] }; // Add youtubeResults to each task
+    setTasks((prevTasks) => [...prevTasks, newTask]);
 
-    setTasks((prevTasks) => [...prevTasks, newTask]); // Add task to local state
+    // Call the function to add the task to Google Calendar
+    addTaskToGoogleCalendar(newTask);
+
     setSubject("");
     setTopic("");
     setClassLevel("");
@@ -35,7 +32,7 @@ export function SubjectTopicForm() {
     const API_KEY = "AIzaSyBHIxzOf-7hfuUDM19jM6x4AtDEiwrwPCM"; // Replace with your Google Calendar API key
     const calendarId = "primary"; // Use 'primary' for the primary calendar
 
-    // Construct the event object
+    // Construct the event object with proper template literals
     const event = {
       summary: `${task.subject} - ${task.topic}`,
       description: `Class Level: ${task.classLevel}`,
@@ -64,8 +61,10 @@ export function SubjectTopicForm() {
   };
 
   const searchYouTube = async (searchQuery, taskIndex) => {
-    const API_KEY = "AIzaSyDQzgCKv49XLKqjohAXxk6xavXyvaPzEp8"; // Replace with your YouTube Data API key
+    const API_KEY = "AIzaSyCkAZnr2hxq62eZ3GFWiUS7NWq0FXGsENg"; // Replace with your YouTube Data API key
     const baseURL = "https://www.googleapis.com/youtube/v3/search";
+
+    // Correctly format the query string using template literals
     const query = `part=snippet&q=${searchQuery}&type=video&key=${API_KEY}`;
 
     try {
@@ -81,10 +80,8 @@ export function SubjectTopicForm() {
         const { data: fallbackData } = await axios.get(
           `${baseURL}?part=snippet&q=educational&type=video&key=${API_KEY}`
         );
-        const relatedVideos = fallbackData.items.filter((video) => video.id.videoId);
-
         const updatedTasks = [...tasks];
-        updatedTasks[taskIndex].youtubeResults = relatedVideos;
+        updatedTasks[taskIndex].youtubeResults = fallbackData.items.filter((video) => video.id.videoId);
         setTasks(updatedTasks);
       }
     } catch (error) {
@@ -92,53 +89,16 @@ export function SubjectTopicForm() {
     }
   };
 
-  const formStyle = {
-    maxWidth: "400px",
-    margin: "0 auto",
-    padding: "20px",
-    backgroundColor: "#ffffff",
-    borderRadius: "12px",
-    boxShadow: "0 4px 8px rgba(0, 0, 0, 0.1)",
-  };
-  const inputStyle = {
-    width: "100%",
-    padding: "12px",
-    marginBottom: "15px",
-    border: "1px solid #ddd",
-    borderRadius: "8px",
-    fontSize: "16px",
-    color: "#333",
-    backgroundColor: "#f9f9f9",
-  };
-  const buttonStyle = {
-    width: "100%",
-    padding: "12px",
-    backgroundColor: "#007bff",
-    color: "white",
-    border: "none",
-    borderRadius: "8px",
-    fontSize: "16px",
-    cursor: "pointer",
-    transition: "background-color 0.3s ease",
-  };
-  const taskButtonStyle = {
-    padding: "8px 12px",
-    marginLeft: "10px",
-    backgroundColor: "#28a745",
-    color: "white",
-    border: "none",
-    borderRadius: "6px",
-    cursor: "pointer",
-    transition: "background-color 0.3s ease",
-  };
+  const formStyle = { maxWidth: "400px", margin: "0 auto", padding: "20px", backgroundColor: "white", borderRadius: "8px", boxShadow: "0 2px 4px rgba(0, 0, 0, 0.1)" };
+  const inputStyle = { width: "100%", padding: "8px", marginBottom: "10px", border: "1px solid #ccc", borderRadius: "4px" };
+  const buttonStyle = { width: "100%", padding: "10px", backgroundColor: "#28a745", color: "white", border: "none", borderRadius: "4px", cursor: "pointer" };
+  const taskButtonStyle = { padding: "5px 10px", marginLeft: "10px", backgroundColor: "#007bff", color: "white", border: "none", borderRadius: "4px", cursor: "pointer" };
+  const linkStyle = { color: "#ff0000", fontWeight: "bold", textDecoration: "underline" };
 
   return (
     <div style={{ display: "flex", justifyContent: "space-between", padding: "20px" }}>
       <div style={{ flex: 1 }}>
         <form onSubmit={handleSubmit} style={formStyle}>
-          <h2 style={{ textAlign: "center", marginBottom: "20px", color: "#007bff" }}>
-            Add Subject/Topic
-          </h2>
           <div>
             <label htmlFor="classLevel">Class Level</label>
             <select
@@ -169,27 +129,19 @@ export function SubjectTopicForm() {
               <option value="">Select Subject</option>
               {["commerce", "commerce-12"].includes(classLevel) &&
                 streamSubjects.commerce.map((subject) => (
-                  <option key={subject} value={subject}>
-                    {subject}
-                  </option>
+                  <option key={subject} value={subject}>{subject}</option>
                 ))}
               {["science", "science-12"].includes(classLevel) &&
                 streamSubjects.science.map((subject) => (
-                  <option key={subject} value={subject}>
-                    {subject}
-                  </option>
+                  <option key={subject} value={subject}>{subject}</option>
                 ))}
               {classLevel === "engineering" &&
                 streamSubjects.engineering.map((subject) => (
-                  <option key={subject} value={subject}>
-                    {subject}
-                  </option>
+                  <option key={subject} value={subject}>{subject}</option>
                 ))}
               {classLevel === "mbbs" &&
                 streamSubjects.mbbs.map((subject) => (
-                  <option key={subject} value={subject}>
-                    {subject}
-                  </option>
+                  <option key={subject} value={subject}>{subject}</option>
                 ))}
             </select>
           </div>
@@ -205,9 +157,7 @@ export function SubjectTopicForm() {
               placeholder="Enter topic"
             />
           </div>
-          <button type="submit" style={buttonStyle}>
-            Add Subject/Topic
-          </button>
+          <button type="submit" style={buttonStyle}>Add Subject/Topic</button>
         </form>
 
         <div style={{ marginTop: "20px" }}>
@@ -215,17 +165,13 @@ export function SubjectTopicForm() {
           <ul>
             {tasks.map((task, index) => (
               <li key={index} style={{ marginBottom: "10px" }}>
-                <strong>{task.subject}</strong> - {task.topic} (Class Level: {task.classLevel}) - Due
-                by: {new Date(task.dueDate).toLocaleString()}
-                <button
-                  onClick={() => searchYouTube(task.topic, index)}
-                  style={taskButtonStyle}
-                >
-                  YouTube Search
-                </button>
+                <strong>{task.subject}</strong> - {task.topic} (Class Level: {task.classLevel}) - Due by: {new Date(task.dueDate).toLocaleString()}
+                <button onClick={() => searchYouTube(task.topic, index)} style={taskButtonStyle}>YouTube Search</button>
+
+                {/* Display YouTube results for the current task */}
                 {task.youtubeResults.length > 0 && (
-                  <div>
-                    <h4>YouTube Videos:</h4>
+                  <div style={{ marginTop: "10px" }}>
+                    <h4>Related YouTube Videos:</h4>
                     <ul>
                       {task.youtubeResults.map((video, idx) => (
                         <li key={idx}>
@@ -233,6 +179,7 @@ export function SubjectTopicForm() {
                             href={`https://www.youtube.com/watch?v=${video.id.videoId}`}
                             target="_blank"
                             rel="noopener noreferrer"
+                            style={linkStyle}
                           >
                             {video.snippet.title}
                           </a>
@@ -247,11 +194,11 @@ export function SubjectTopicForm() {
         </div>
       </div>
 
-      <div style={{ width: "300px", height: "300px", padding: "20px", backgroundColor: "#f8f9fa", borderRadius: "8px" }}>
-        <h3 style={{ textAlign: "center", marginBottom: "15px" }}>Google Calendar</h3>
+      <div style={{ width: "300px", padding: "20px", backgroundColor: "#f8f9fa", borderRadius: "8px" }}>
+        <h3>Google Calendar</h3>
         <iframe
           src="https://calendar.google.com/calendar/embed?src=primary&ctz=UTC"
-          style={{ width: "100%", height: "100%", border: "0" }}
+          style={{ width: "300px", height: "300px", border: "0" }}
           frameBorder="0"
           scrolling="no"
         ></iframe>

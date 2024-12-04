@@ -1,13 +1,25 @@
 import { useState } from "react";
 
+
 export function LoginPage({ onLogin }) {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [error, setError] = useState("");
 
   const handleSubmit = (e) => {
     e.preventDefault();
+    
+    // Basic client-side validation (email and password check)
+    if (!email || !password) {
+      setError("Email and password are required.");
+      return;
+    }
+    
+    // Clear error on successful submit attempt
+    setError("");
+    
     // TODO: Implement actual authentication logic
-    onLogin(email);
+    onLogin(email, password);
   };
 
   const cardStyle = {
@@ -36,6 +48,12 @@ export function LoginPage({ onLogin }) {
     cursor: "pointer",
   };
 
+  const errorStyle = {
+    color: "red",
+    fontSize: "12px",
+    marginBottom: "10px",
+  };
+
   return (
     <div
       style={{
@@ -44,7 +62,8 @@ export function LoginPage({ onLogin }) {
         alignItems: "center",
         justifyContent: "center",
         backgroundColor: "#f0f0f0",
-      }}>
+      }}
+    >
       <div style={cardStyle}>
         <h2 style={{ marginBottom: "20px", textAlign: "center" }}>
           Welcome to Study Planner
@@ -53,12 +72,15 @@ export function LoginPage({ onLogin }) {
           Please login to continue
         </p>
         <form onSubmit={handleSubmit}>
+          {/* Error message */}
+          {error && <p style={errorStyle}>{error}</p>}
+
           <div>
-            <label htmlFor='email'>Email</label>
+            <label htmlFor="email">Email</label>
             <input
-              id='email'
-              type='email'
-              placeholder='m@example.com'
+              id="email"
+              type="email"
+              placeholder="m@example.com"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
               required
@@ -66,17 +88,17 @@ export function LoginPage({ onLogin }) {
             />
           </div>
           <div>
-            <label htmlFor='password'>Password</label>
+            <label htmlFor="password">Password</label>
             <input
-              id='password'
-              type='password'
+              id="password"
+              type="password"
               value={password}
               onChange={(e) => setPassword(e.target.value)}
               required
               style={inputStyle}
             />
           </div>
-          <button type='submit' style={buttonStyle}>
+          <button type="submit" style={buttonStyle}>
             Login
           </button>
         </form>
@@ -86,7 +108,8 @@ export function LoginPage({ onLogin }) {
             textAlign: "center",
             fontSize: "14px",
             color: "#666",
-          }}>
+          }}
+        >
           Don't have an account? Contact administrator.
         </p>
       </div>

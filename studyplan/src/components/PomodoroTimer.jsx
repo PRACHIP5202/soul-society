@@ -1,106 +1,83 @@
+// async function sendMessage() {
+//   const userInput = document.getElementById("user-input").value;
+//   if (!userInput) return;
+
+//   // Display user input in chatbox
+//   displayMessage(userInput, 'user');
+
+//   // Clear the input field
+//   document.getElementById("user-input").value = "";
+
+//   // Call Gemini API
+//   const response = await getGeminiResponse(userInput);
+
+//   // Display bot's reply
+//   displayMessage(response, 'bot');
+// }
+
+// function displayMessage(message, sender) {
+//   const chatBox = document.getElementById("chat-box");
+//   const messageElement = document.createElement("div");
+//   messageElement.classList.add(sender);
+//   messageElement.innerText = message;
+//   chatBox.appendChild(messageElement);
+//   chatBox.scrollTop = chatBox.scrollHeight;  // Scroll to latest message
+// }
+
+// async function getGeminiResponse(query) {
+//   const apiKey = 'AIzaSyDM0SaPGMex_ln5wQZf-O419j9JZZREvqg';  // Replace with your Gemini API key
+//   const endpoint = 'https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash-latest:generateContent?key=AIzaSyDM0SaPGMex_ln5wQZf-O419j9JZZREvqg';  // Replace with actual Gemini API endpoint
+
+//   const response = await fetch(endpoint, {
+//     method: 'POST',
+//     headers: {
+//       'Content-Type': 'application/json',
+//       'Authorization': `Bearer ${apiKey}`,
+//     },
+//     body: JSON.stringify({ query })
+//   });
+
+//   const data = await response.json();
+//   return data.reply;  // Assuming the API returns a reply field
+// }
 import { useState, useEffect } from "react";
 
 export function PomodoroTimer() {
-  const [time, setTime] = useState(25 * 60); // Initial time in seconds
-  const [isActive, setIsActive] = useState(false); // Timer active state
-  const [isBreak, setIsBreak] = useState(false); // Break state
-  const [isFullscreen, setIsFullscreen] = useState(false); // Fullscreen state
+  const [time, setTime] = useState(25 * 60); // Default focus time: 25 minutes
+  const [isActive, setIsActive] = useState(false);
+  const [isBreak, setIsBreak] = useState(false);
 
   useEffect(() => {
     let interval = null;
 
-    // Handle timer logic
     if (isActive && time > 0) {
       interval = setInterval(() => {
-        setTime((time) => time - 1);
+        setTime((prevTime) => prevTime - 1);
       }, 1000);
     } else if (time === 0) {
-      // Switch between focus time and break time
       if (isBreak) {
-        setTime(25 * 60); // Reset to focus time
-        setIsBreak(false);
+        setTime(25 * 60); // Reset focus time
+        setIsBreak(false); // End break
       } else {
-        setTime(5 * 60); // Set to break time
-        setIsBreak(true);
+        setTime(5 * 60); // Start break
+        setIsBreak(true); // Begin break
       }
-      setIsActive(false);
-      exitFullScreen(); // Exit fullscreen when timer ends
+      setIsActive(false); // Stop timer once time is up
     }
 
     return () => {
-      if (interval) clearInterval(interval); // Clean up interval on component unmount
+      if (interval) clearInterval(interval);
     };
   }, [isActive, time, isBreak]);
 
-  useEffect(() => {
-    // Prevent tab switch or page reload
-    const handleBeforeUnload = (event) => {
-      if (isActive) {
-        const message = "You have an active timer. Are you sure you want to leave?";
-        event.returnValue = message; // Standard for most browsers
-        return message; // For some browsers (e.g., Chrome)
-      }
-    };
-
-    // Event listener for tab visibility changes
-    const handleVisibilityChange = () => {
-      if (document.hidden && isActive) {
-        alert("You switched tabs! The timer has been paused.");
-        setIsActive(false); // Pause the timer
-      }
-    };
-
-    window.addEventListener("beforeunload", handleBeforeUnload);
-    document.addEventListener("visibilitychange", handleVisibilityChange);
-
-    // Clean up listeners
-    return () => {
-      window.removeEventListener("beforeunload", handleBeforeUnload);
-      document.removeEventListener("visibilitychange", handleVisibilityChange);
-    };
-  }, [isActive]);
-
-  // Function to request fullscreen
-  const requestFullScreen = () => {
-    const element = document.documentElement; // Use the entire page
-    if (element.requestFullscreen) {
-      element.requestFullscreen();
-    } else if (element.mozRequestFullScreen) {
-      element.mozRequestFullScreen(); // Firefox
-    } else if (element.webkitRequestFullscreen) {
-      element.webkitRequestFullscreen(); // Chrome, Safari
-    } else if (element.msRequestFullscreen) {
-      element.msRequestFullscreen(); // IE/Edge
-    }
-    setIsFullscreen(true); // Update fullscreen state
-  };
-
-  // Function to exit fullscreen
-  const exitFullScreen = () => {
-    if (document.exitFullscreen) {
-      document.exitFullscreen();
-    } else if (document.mozCancelFullScreen) {
-      document.mozCancelFullScreen(); // Firefox
-    } else if (document.webkitExitFullscreen) {
-      document.webkitExitFullscreen(); // Chrome, Safari
-    } else if (document.msExitFullscreen) {
-      document.msExitFullscreen(); // IE/Edge
-    }
-    setIsFullscreen(false); // Update fullscreen state
-  };
-
   const toggleTimer = () => {
-    setIsActive(true); // Automatically start the timer on click
-    requestFullScreen(); // Request fullscreen when timer starts
+    setIsActive(!isActive);
   };
 
   const resetTimer = () => {
     setTime(25 * 60);
     setIsActive(false);
     setIsBreak(false);
-    if (isFullscreen) {
-      exitFullScreen(); // Exit fullscreen on reset
-    }
   };
 
   const formatTime = (seconds) => {
@@ -147,7 +124,7 @@ export function PomodoroTimer() {
   };
 
   const progressStyle = {
-    width: `${(time / (isBreak ? 300 : 1500)) * 100}%`,
+    width: `${(time / (isBreak ? 5 * 60 : 25 * 60)) * 100}%`, // Dynamically calculate progress width
     height: "100%",
     backgroundColor: "#28a745",
     transition: "width 0.5s ease-in-out",
@@ -164,12 +141,11 @@ export function PomodoroTimer() {
       </div>
       <div>
         <button onClick={toggleTimer} style={buttonStyle}>
-          Start
+          {isActive ? "Pause" : "Start"}
         </button>
         <button
           onClick={resetTimer}
-          style={{ ...buttonStyle, backgroundColor: "#6c757d" }}
-        >
+          style={{ ...buttonStyle, backgroundColor: "#6c757d" }}>
           Reset
         </button>
       </div>
