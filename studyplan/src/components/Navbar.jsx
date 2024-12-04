@@ -73,7 +73,7 @@
 //   );
 // }
 
-import { useState } from "react";
+// import { useState } from "react";
 
 export function Navbar({ activeTab, setActiveTab, onLogout }) {
   const navStyle = {
@@ -138,7 +138,7 @@ export function Navbar({ activeTab, setActiveTab, onLogout }) {
             style={activeTab === "chatbot" ? activeButtonStyle : buttonStyle}
             onClick={() => setActiveTab("chatbot")}
           >
-            Gemini AI Chatbot
+             AI Chatbot
           </button>
           <button
             style={{ ...buttonStyle, backgroundColor: "#dc3545" }}

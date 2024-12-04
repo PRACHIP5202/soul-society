@@ -78,77 +78,122 @@ export function TimetableGenerator() {
 
   // Styling for the container, table, and individual elements
   const containerStyle = {
-    maxWidth: "600px",
-    margin: "0 auto",
-    padding: "20px",
-    backgroundColor: "white",
-    borderRadius: "8px",
-    boxShadow: "0 2px 4px rgba(0, 0, 0, 0.1)",
+    maxWidth: "700px",
+    margin: "50px auto",
+    padding: "30px",
+    backgroundColor: "#ffffff", // Clean white background for the timetable box
+    borderRadius: "10px",
+    boxShadow: "0 8px 16px rgba(0, 0, 0, 0.1)",
+    fontFamily: "'Poppins', sans-serif", // Modern font family
+    backgroundImage: "linear-gradient(135deg, #f5f7fa, #c3cfe2)", // Soft gradient background
+  };
+
+  const headerStyle = {
+    color: "#2d3e50", // Soft dark blue for header
+    fontSize: "30px",
+    fontWeight: "600",
+    textAlign: "center", // Center the header
+    marginBottom: "30px",
+  };
+
+  const paragraphStyle = {
+    color: "#7b8a99", // Subtle gray text for instructions
+    fontSize: "16px",
+    marginBottom: "20px",
+    textAlign: "center",
+  };
+
+  const inputStyle = {
+    padding: "12px",
+    marginRight: "15px",
+    borderRadius: "5px",
+    border: "1px solid #ddd",
+    width: "250px",
+    fontSize: "16px",
+    marginBottom: "20px", // Adding margin for spacing
+  };
+
+  const buttonStyle = {
+    padding: "12px 20px",
+    backgroundColor: "#6c63ff", // Soft purple button color
+    color: "white",
+    border: "none",
+    borderRadius: "5px",
+    cursor: "pointer",
+    fontSize: "16px",
+    transition: "background-color 0.3s",
+    marginTop: "10px",
+  };
+
+  const buttonHoverStyle = {
+    backgroundColor: "#4e4bdb", // Darker purple on hover
   };
 
   const tableStyle = {
     width: "100%",
     borderCollapse: "collapse",
-    marginTop: "20px",
+    marginTop: "30px",
   };
 
   const thStyle = {
-    backgroundColor: "#f8f9fa",
-    padding: "10px",
-    borderBottom: "2px solid #dee2e6",
+    backgroundColor: "#f7f9fc", // Light gray for table header
+    padding: "15px",
+    borderBottom: "2px solid #e1e8ee",
     textAlign: "left",
+    color: "#2d3e50", // Dark text for table header
   };
 
   const tdStyle = {
-    padding: "10px",
-    borderBottom: "1px solid #dee2e6",
+    padding: "15px",
+    borderBottom: "1px solid #e1e8ee",
+    textAlign: "left",
+    color: "#7b8a99", // Light gray text for table data
+  };
+
+  const logoutButtonStyle = {
+    padding: "12px 20px",
+    backgroundColor: "#e74c3c", // Red button color
+    color: "white",
+    border: "none",
+    borderRadius: "5px",
+    cursor: "pointer",
+    fontSize: "16px",
+    marginTop: "20px",
+    transition: "background-color 0.3s",
+  };
+
+  const logoutButtonHoverStyle = {
+    backgroundColor: "#c0392b", // Darker red on hover
   };
 
   return (
     <div style={containerStyle}>
-      <h2 style={{ marginBottom: "20px" }}>Timetable Generator</h2>
-      <p style={{ color: "#666", marginBottom: "20px" }}>
-        Enter your subjects and the time allocated for each subject
+      <h2 style={headerStyle}>Timetable Generator</h2>
+      <p style={paragraphStyle}>
+        Enter your subjects and the time allocated for each subject.
       </p>
 
       {/* Form for adding subjects and time */}
-      <div style={{ marginBottom: "20px" }}>
+      <div style={{ textAlign: "center" }}>
         <input
           type="text"
           placeholder="Subject Name"
           value={subject}
           onChange={(e) => setSubject(e.target.value)}
-          style={{
-            padding: "10px",
-            marginRight: "10px",
-            borderRadius: "4px",
-            border: "1px solid #ccc",
-            width: "200px",
-          }}
+          style={inputStyle}
         />
         <input
           type="number"
           placeholder="Time (hours)"
           value={time}
           onChange={(e) => setTime(e.target.value)}
-          style={{
-            padding: "10px",
-            marginRight: "10px",
-            borderRadius: "4px",
-            border: "1px solid #ccc",
-            width: "100px",
-          }}
+          style={inputStyle}
         />
         <button
           onClick={handleAddSubject}
-          style={{
-            padding: "10px 20px",
-            backgroundColor: "#007bff",
-            color: "white",
-            border: "none",
-            borderRadius: "4px",
-            cursor: "pointer",
-          }}
+          style={buttonStyle}
+          onMouseOver={(e) => (e.target.style.backgroundColor = buttonHoverStyle.backgroundColor)}
+          onMouseOut={(e) => (e.target.style.backgroundColor = buttonStyle.backgroundColor)}
         >
           Add Subject
         </button>
@@ -157,7 +202,7 @@ export function TimetableGenerator() {
       {/* Display the timetable in a table format */}
       {subjects.length > 0 && (
         <div>
-          <h3 style={{ marginBottom: "20px" }}>Your Timetable</h3>
+          <h3 style={{ marginBottom: "20px", color: "#2d3e50", textAlign: "center" }}>Your Timetable</h3>
           <table style={tableStyle}>
             <thead>
               <tr>
@@ -181,23 +226,19 @@ export function TimetableGenerator() {
         </div>
       )}
       {/* If no subjects are added, show a message */}
-      {subjects.length === 0 && <p>No subjects added yet.</p>}
+      {subjects.length === 0 && <p style={{ textAlign: "center", color: "#7b8a99" }}>No subjects added yet.</p>}
 
       {/* Logout button */}
-      <button
-        onClick={handleLogout}
-        style={{
-          padding: "10px 20px",
-          backgroundColor: "#dc3545",
-          color: "white",
-          border: "none",
-          borderRadius: "4px",
-          cursor: "pointer",
-          marginTop: "20px",
-        }}
-      >
-        Clear
-      </button>
+      <div style={{ textAlign: "center" }}>
+        <button
+          onClick={handleLogout}
+          style={logoutButtonStyle}
+          onMouseOver={(e) => (e.target.style.backgroundColor = logoutButtonHoverStyle.backgroundColor)}
+          onMouseOut={(e) => (e.target.style.backgroundColor = logoutButtonStyle.backgroundColor)}
+        >
+          Clear
+        </button>
+      </div>
     </div>
   );
 }

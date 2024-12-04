@@ -1,45 +1,4 @@
-// async function sendMessage() {
-//   const userInput = document.getElementById("user-input").value;
-//   if (!userInput) return;
 
-//   // Display user input in chatbox
-//   displayMessage(userInput, 'user');
-
-//   // Clear the input field
-//   document.getElementById("user-input").value = "";
-
-//   // Call Gemini API
-//   const response = await getGeminiResponse(userInput);
-
-//   // Display bot's reply
-//   displayMessage(response, 'bot');
-// }
-
-// function displayMessage(message, sender) {
-//   const chatBox = document.getElementById("chat-box");
-//   const messageElement = document.createElement("div");
-//   messageElement.classList.add(sender);
-//   messageElement.innerText = message;
-//   chatBox.appendChild(messageElement);
-//   chatBox.scrollTop = chatBox.scrollHeight;  // Scroll to latest message
-// }
-
-// async function getGeminiResponse(query) {
-//   const apiKey = 'AIzaSyDM0SaPGMex_ln5wQZf-O419j9JZZREvqg';  // Replace with your Gemini API key
-//   const endpoint = 'https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash-latest:generateContent?key=AIzaSyDM0SaPGMex_ln5wQZf-O419j9JZZREvqg';  // Replace with actual Gemini API endpoint
-
-//   const response = await fetch(endpoint, {
-//     method: 'POST',
-//     headers: {
-//       'Content-Type': 'application/json',
-//       'Authorization': `Bearer ${apiKey}`,
-//     },
-//     body: JSON.stringify({ query })
-//   });
-
-//   const data = await response.json();
-//   return data.reply;  // Assuming the API returns a reply field
-// }
 import { useState, useEffect } from "react";
 
 export function PomodoroTimer() {

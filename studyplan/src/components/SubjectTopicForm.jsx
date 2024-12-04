@@ -1,5 +1,6 @@
 import { useState } from "react";
 import axios from "axios";
+import "./subjectForm.css";
 
 export function SubjectTopicForm() {
   const [subject, setSubject] = useState("");
@@ -17,7 +18,7 @@ export function SubjectTopicForm() {
   const handleSubmit = (e) => {
     e.preventDefault();
 
-    const newTask = { subject, topic, classLevel, dueDate: new Date(new Date().getTime() + 24 * 60 * 60 * 1000).toISOString(), youtubeResults: [] }; // Add youtubeResults to each task
+    const newTask = { subject, topic, classLevel, dueDate: new Date(new Date().getTime() + 24 * 60 * 60 * 1000).toISOString(), youtubeResults: [] };
     setTasks((prevTasks) => [...prevTasks, newTask]);
 
     // Call the function to add the task to Google Calendar
@@ -29,18 +30,17 @@ export function SubjectTopicForm() {
   };
 
   const addTaskToGoogleCalendar = async (task) => {
-    const API_KEY = "AIzaSyBHIxzOf-7hfuUDM19jM6x4AtDEiwrwPCM"; // Replace with your Google Calendar API key
-    const calendarId = "primary"; // Use 'primary' for the primary calendar
+    const API_KEY = "AIzaSyBHIxzOf-7hfuUDM19jM6x4AtDEiwrwPCM"; 
+    const calendarId = "primary"; 
 
-    // Construct the event object with proper template literals
     const event = {
       summary: `${task.subject} - ${task.topic}`,
       description: `Class Level: ${task.classLevel}`,
       start: {
-        dateTime: new Date().toISOString(), // Set the current time as start
+        dateTime: new Date().toISOString(),
       },
       end: {
-        dateTime: task.dueDate, // Use the task's due date
+        dateTime: task.dueDate,
       },
     };
 
@@ -61,10 +61,9 @@ export function SubjectTopicForm() {
   };
 
   const searchYouTube = async (searchQuery, taskIndex) => {
-    const API_KEY = "AIzaSyCkAZnr2hxq62eZ3GFWiUS7NWq0FXGsENg"; // Replace with your YouTube Data API key
+    const API_KEY = "AIzaSyCkAZnr2hxq62eZ3GFWiUS7NWq0FXGsENg"; 
     const baseURL = "https://www.googleapis.com/youtube/v3/search";
 
-    // Correctly format the query string using template literals
     const query = `part=snippet&q=${searchQuery}&type=video&key=${API_KEY}`;
 
     try {
@@ -89,24 +88,18 @@ export function SubjectTopicForm() {
     }
   };
 
-  const formStyle = { maxWidth: "400px", margin: "0 auto", padding: "20px", backgroundColor: "white", borderRadius: "8px", boxShadow: "0 2px 4px rgba(0, 0, 0, 0.1)" };
-  const inputStyle = { width: "100%", padding: "8px", marginBottom: "10px", border: "1px solid #ccc", borderRadius: "4px" };
-  const buttonStyle = { width: "100%", padding: "10px", backgroundColor: "#28a745", color: "white", border: "none", borderRadius: "4px", cursor: "pointer" };
-  const taskButtonStyle = { padding: "5px 10px", marginLeft: "10px", backgroundColor: "#007bff", color: "white", border: "none", borderRadius: "4px", cursor: "pointer" };
-  const linkStyle = { color: "#ff0000", fontWeight: "bold", textDecoration: "underline" };
-
   return (
-    <div style={{ display: "flex", justifyContent: "space-between", padding: "20px" }}>
-      <div style={{ flex: 1 }}>
-        <form onSubmit={handleSubmit} style={formStyle}>
-          <div>
+    <div className="subject-topic-container">
+      <div className="form-container">
+        <form onSubmit={handleSubmit} className="form-style">
+          <div className="form-group">
             <label htmlFor="classLevel">Class Level</label>
             <select
               id="classLevel"
               value={classLevel}
               onChange={(e) => setClassLevel(e.target.value)}
               required
-              style={inputStyle}
+              className="input-field"
             >
               <option value="">Select Class Level</option>
               <option value="commerce">11 - Commerce</option>
@@ -117,14 +110,14 @@ export function SubjectTopicForm() {
               <option value="mbbs">MBBS</option>
             </select>
           </div>
-          <div>
+          <div className="form-group">
             <label htmlFor="subject">Subject</label>
             <select
               id="subject"
               value={subject}
               onChange={(e) => setSubject(e.target.value)}
               required
-              style={inputStyle}
+              className="input-field"
             >
               <option value="">Select Subject</option>
               {["commerce", "commerce-12"].includes(classLevel) &&
@@ -145,7 +138,7 @@ export function SubjectTopicForm() {
                 ))}
             </select>
           </div>
-          <div>
+          <div className="form-group">
             <label htmlFor="topic">Topic</label>
             <input
               id="topic"
@@ -153,24 +146,23 @@ export function SubjectTopicForm() {
               value={topic}
               onChange={(e) => setTopic(e.target.value)}
               required
-              style={inputStyle}
+              className="input-field"
               placeholder="Enter topic"
             />
           </div>
-          <button type="submit" style={buttonStyle}>Add Subject/Topic</button>
+          <button type="submit" className="submit-button">Add Subject/Topic</button>
         </form>
 
-        <div style={{ marginTop: "20px" }}>
+        <div className="task-list">
           <h3>Your Tasks:</h3>
           <ul>
             {tasks.map((task, index) => (
-              <li key={index} style={{ marginBottom: "10px" }}>
+              <li key={index} className="task-item">
                 <strong>{task.subject}</strong> - {task.topic} (Class Level: {task.classLevel}) - Due by: {new Date(task.dueDate).toLocaleString()}
-                <button onClick={() => searchYouTube(task.topic, index)} style={taskButtonStyle}>YouTube Search</button>
+                <button onClick={() => searchYouTube(task.topic, index)} className="task-button">YouTube Search</button>
 
-                {/* Display YouTube results for the current task */}
                 {task.youtubeResults.length > 0 && (
-                  <div style={{ marginTop: "10px" }}>
+                  <div className="youtube-results">
                     <h4>Related YouTube Videos:</h4>
                     <ul>
                       {task.youtubeResults.map((video, idx) => (
@@ -179,7 +171,7 @@ export function SubjectTopicForm() {
                             href={`https://www.youtube.com/watch?v=${video.id.videoId}`}
                             target="_blank"
                             rel="noopener noreferrer"
-                            style={linkStyle}
+                            className="youtube-link"
                           >
                             {video.snippet.title}
                           </a>
@@ -194,7 +186,7 @@ export function SubjectTopicForm() {
         </div>
       </div>
 
-      <div style={{ width: "300px", padding: "20px", backgroundColor: "#f8f9fa", borderRadius: "8px" }}>
+      <div className="calendar-container">
         <h3>Google Calendar</h3>
         <iframe
           src="https://calendar.google.com/calendar/embed?src=primary&ctz=UTC"
