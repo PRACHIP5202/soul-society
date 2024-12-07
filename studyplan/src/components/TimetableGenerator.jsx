@@ -176,15 +176,15 @@ export function TimetableGenerator() {
       {/* Form for adding subjects and time */}
       <div style={{ textAlign: "center" }}>
         <input
-          type="text"
-          placeholder="Subject Name"
+          type='text'
+          placeholder='Subject Name'
           value={subject}
           onChange={(e) => setSubject(e.target.value)}
           style={inputStyle}
         />
         <input
-          type="number"
-          placeholder="Time (hours)"
+          type='number'
+          placeholder='Time (hours)'
           value={time}
           onChange={(e) => setTime(e.target.value)}
           style={inputStyle}
@@ -192,9 +192,12 @@ export function TimetableGenerator() {
         <button
           onClick={handleAddSubject}
           style={buttonStyle}
-          onMouseOver={(e) => (e.target.style.backgroundColor = buttonHoverStyle.backgroundColor)}
-          onMouseOut={(e) => (e.target.style.backgroundColor = buttonStyle.backgroundColor)}
-        >
+          onMouseOver={(e) =>
+            (e.target.style.backgroundColor = buttonHoverStyle.backgroundColor)
+          }
+          onMouseOut={(e) =>
+            (e.target.style.backgroundColor = buttonStyle.backgroundColor)
+          }>
           Add Subject
         </button>
       </div>
@@ -202,7 +205,14 @@ export function TimetableGenerator() {
       {/* Display the timetable in a table format */}
       {subjects.length > 0 && (
         <div>
-          <h3 style={{ marginBottom: "20px", color: "#2d3e50", textAlign: "center" }}>Your Timetable</h3>
+          <h3
+            style={{
+              marginBottom: "20px",
+              color: "#2d3e50",
+              textAlign: "center",
+            }}>
+            Your Timetable
+          </h3>
           <table style={tableStyle}>
             <thead>
               <tr>
@@ -226,16 +236,24 @@ export function TimetableGenerator() {
         </div>
       )}
       {/* If no subjects are added, show a message */}
-      {subjects.length === 0 && <p style={{ textAlign: "center", color: "#7b8a99" }}>No subjects added yet.</p>}
+      {subjects.length === 0 && (
+        <p style={{ textAlign: "center", color: "#7b8a99" }}>
+          No subjects added yet.
+        </p>
+      )}
 
       {/* Logout button */}
       <div style={{ textAlign: "center" }}>
         <button
           onClick={handleLogout}
           style={logoutButtonStyle}
-          onMouseOver={(e) => (e.target.style.backgroundColor = logoutButtonHoverStyle.backgroundColor)}
-          onMouseOut={(e) => (e.target.style.backgroundColor = logoutButtonStyle.backgroundColor)}
-        >
+          onMouseOver={(e) =>
+            (e.target.style.backgroundColor =
+              logoutButtonHoverStyle.backgroundColor)
+          }
+          onMouseOut={(e) =>
+            (e.target.style.backgroundColor = logoutButtonStyle.backgroundColor)
+          }>
           Clear
         </button>
       </div>
